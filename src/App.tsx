@@ -1,5 +1,7 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import "./App.css";
 import { useForm } from "react-hook-form";
+import { validationSchema } from "./utils/validationSchema";
 
 interface LoginForm {
   name: string;
@@ -12,7 +14,10 @@ function App() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginForm>({ mode: "onChange" });
+  } = useForm<LoginForm>({
+    mode: "onChange",
+    resolver: zodResolver(validationSchema),
+  });
   const onSubmit = (data: LoginForm) => {
     console.log(data);
   };
@@ -25,8 +30,8 @@ function App() {
           type="text"
           id="name"
           {...register("name", {
-            required: "名前は必須です",
-            minLength: { value: 3, message: "3文字以上で入力してください" },
+            // required: "名前は必須です",
+            // minLength: { value: 3, message: "3文字以上で入力してください" },
           })}
         />
         <p>{errors.name?.message as React.ReactNode}</p>
@@ -35,8 +40,8 @@ function App() {
           type="email"
           id="email"
           {...register("email", {
-            required: "emailがありません",
-            minLength: { value: 3, message: "3文字以上で入力してください" },
+            // required: "emailがありません",
+            // minLength: { value: 3, message: "3文字以上で入力してください" },
           })}
         />
         <p>{errors.email?.message as React.ReactNode}</p>
@@ -45,8 +50,8 @@ function App() {
           type="password"
           id="password"
           {...register("password", {
-            required: "passwordがありません",
-            minLength: { value: 3, message: "3文字以上で入力してください" },
+            // required: "passwordがありません",
+            // minLength: { value: 3, message: "3文字以上で入力してください" },
           })}
         />
         <p>{errors.password?.message as React.ReactNode}</p>
